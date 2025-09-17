@@ -169,9 +169,9 @@ dmypy.json
 .pyre/
 
 # Django specific
-media/
+
 staticfiles/
-static/
+
 
 # IDE
 .vscode/
