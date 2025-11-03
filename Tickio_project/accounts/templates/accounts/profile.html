@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 <div class="container mt-5">
@@ -6,7 +7,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-center mb-4">Mi Perfil</h2>
+                    <h2 class="text-center mb-4">{% trans "Mi Perfil" %}</h2>
                     
                     {% if messages %}
                     <div class="messages mb-4">
@@ -48,7 +49,7 @@
                                     {% endif %}
                                 </div>
                                 {% endfor %}
-                                <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
+                                <button type="submit" class="btn btn-primary">{% trans "Actualizar Perfil" %}</button>
                             </form>
                         </div>
                     </div>

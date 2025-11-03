@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Checkout - Tickio{% endblock %}
+{% block title %}{% trans "Checkout" %} - Tickio{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-  <h2>Checkout</h2>
+  <h2>{% trans "Checkout" %}</h2>
   {% if success %}
-  <div class="alert alert-success">Pago simulado aprobado. ¡Gracias por tu compra!</div>
-  <p>Pedido: {{ order.id }} | Total: ${{ order.total_amount }}</p>
-  <a href="{% url 'events:events' %}" class="btn btn-primary">Seguir explorando eventos</a>
+  <div class="alert alert-success">{% trans "Pago simulado aprobado. ¡Gracias por tu compra!" %}</div>
+  <p>{% blocktrans with pedido=order.id total=order.total_amount %}Pedido: {{ pedido }} | Total: ${{ total }}{% endblocktrans %}</p>
+  <a href="{% url 'events:events' %}" class="btn btn-primary">{% trans "Seguir explorando eventos" %}</a>
   {% else %}
     {% if error %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -16,12 +17,12 @@
     {% if cart %}
     <form method="post">
       {% csrf_token %}
-      <button class="btn btn-success">Pagar ahora (simulado)</button>
-      <a href="{% url 'orders:cart_view' %}" class="btn btn-secondary">Volver al carrito</a>
+      <button class="btn btn-success">{% trans "Pagar ahora (simulado)" %}</button>
+      <a href="{% url 'orders:cart_view' %}" class="btn btn-secondary">{% trans "Volver al carrito" %}</a>
     </form>
     {% else %}
-      <div class="alert alert-info">No tienes productos en el carrito.</div>
-      <a href="{% url 'events:events' %}" class="btn btn-primary">Explorar eventos</a>
+      <div class="alert alert-info">{% trans "No tienes productos en el carrito." %}</div>
+      <a href="{% url 'events:events' %}" class="btn btn-primary">{% trans "Explorar eventos" %}</a>
     {% endif %}
   {% endif %}
 </div>

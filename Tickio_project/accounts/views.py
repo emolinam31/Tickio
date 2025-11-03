@@ -5,10 +5,13 @@ from django.contrib import messages
 from django.contrib.auth.views import LoginView
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from orders.models import Order
+from django.utils.translation import gettext as _
+
 
 class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
     redirect_authenticated_user = True
+
 
 def register(request):
     if request.method == 'POST':
@@ -16,13 +19,14 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            messages.success(request, '¡Registro exitoso!')
+            messages.success(request, _('¡Registro exitoso!'))
             return redirect('events:home')
         else:
-            messages.error(request, 'Por favor corrija los errores en el formulario.')
+            messages.error(request, _('Por favor corrija los errores en el formulario.'))
     else:
         form = CustomUserCreationForm()
     return render(request, 'accounts/register.html', {'form': form})
+
 
 @login_required
 def profile(request):
@@ -30,11 +34,12 @@ def profile(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Perfil actualizado!')
+            messages.success(request, _('Perfil actualizado!'))
             return redirect('accounts:profile')
     else:
         form = CustomUserChangeForm(instance=request.user)
     return render(request, 'accounts/profile.html', {'form': form})
+
 
 def logout_view(request):
     logout(request)

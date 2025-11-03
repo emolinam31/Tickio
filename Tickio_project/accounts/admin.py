@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.translation import gettext_lazy as _
 from .models import CustomUser, Asistente, Organizador
 
 class AsistenteInline(admin.StackedInline):
@@ -16,8 +17,8 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('tipo', 'is_staff', 'is_active')
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Información Personal', {'fields': ('nombre', 'first_name', 'last_name')}),
-        ('Permisos', {'fields': ('tipo', 'is_staff', 'is_active')}),
+        (_('Información Personal'), {'fields': ('nombre', 'first_name', 'last_name')}),
+        (_('Permisos'), {'fields': ('tipo', 'is_staff', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
