@@ -49,17 +49,22 @@
                             {% if CURRENT_LANGUAGE == 'es' %}ES{% else %}EN{% endif %}
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            {% for language_code, language_name in LANGUAGES %}
-                                <li>
-                                    <form action="{% url 'set_language' %}" method="post" style="display: inline;">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="language" value="{{ language_code }}">
-                                        <button type="submit" class="dropdown-item {% if language_code == CURRENT_LANGUAGE %}active{% endif %}">
-                                            {{ language_name }}
+                            <li>
+                                <form action="{% url 'set_language' %}" method="post" style="display: contents;">
+                                    {% csrf_token %}
+                                    {% for language_code, language_name in LANGUAGES %}
+                                        <button name="language" value="{{ language_code }}" type="submit" class="dropdown-item {% if language_code == CURRENT_LANGUAGE %}active{% endif %}">
+                                            {% if language_code == 'es' %}
+                                                <i class="fas fa-flag"></i> Español
+                                            {% elif language_code == 'en' %}
+                                                <i class="fas fa-flag"></i> English
+                                            {% else %}
+                                                {{ language_name }}
+                                            {% endif %}
                                         </button>
-                                    </form>
-                                </li>
-                            {% endfor %}
+                                    {% endfor %}
+                                </form>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

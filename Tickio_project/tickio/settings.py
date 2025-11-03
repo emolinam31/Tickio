@@ -131,6 +131,15 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
+# Configuración de idioma con cookies (más confiable en Chrome)
+# Las cookies almacenan la preferencia de idioma del usuario
+LANGUAGE_COOKIE_AGE = 31536000  # Un año en segundos
+LANGUAGE_COOKIE_SECURE = False  # False para desarrollo, True en producción con HTTPS
+LANGUAGE_COOKIE_HTTPONLY = False  # Permite acceso desde JavaScript si es necesario
+LANGUAGE_COOKIE_NAME = 'django_language'  # Nombre de la cookie
+LANGUAGE_COOKIE_PATH = '/'  # Disponible en toda la aplicación
+LANGUAGE_COOKIE_SAMESITE = 'Lax'  # Configuración de seguridad para cookies
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
