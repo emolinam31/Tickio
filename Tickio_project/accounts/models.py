@@ -23,7 +23,7 @@ class Organizador(models.Model):
 
     class Meta:
         verbose_name = 'Organizador'
-        verbose_name_plurals = 'Organizadores'
+        verbose_name_plural = 'Organizadores'
 
 class CustomUser(AbstractUser):
     TIPO_CHOICES = (
