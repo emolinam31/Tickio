@@ -6,6 +6,7 @@ from typing import Optional, List
 from events.models import Evento
 from events.repositories import EventoRepository
 from events.schemas import EventoListaSchema, EventoDetailSchema
+from events.geocoding_service import GeocodingServiceWithCache
 
 # Crear router para eventos
 router = APIRouter(prefix="/api/v1/eventos", tags=["Eventos"])
@@ -55,8 +56,18 @@ def obtener_evento_por_id(evento_id: int):
             detail=f"Evento con ID {evento_id} no encontrado o no está publicado"
         )
 
+    # Obtener coordenadas del lugar
+    coords = GeocodingServiceWithCache.get_coordinates_cached(
+        lugar=evento.lugar,
+        ciudad=evento.lugar.split(',')[-1].strip() if ',' in evento.lugar else evento.lugar
+    )
+
+    evento_dict = evento_to_dict(evento)
+    evento_dict['latitud'] = coords['latitud']
+    evento_dict['longitud'] = coords['longitud']
+
     return EventoDetailSchema(
-        **evento_to_dict(evento),
+        **evento_dict,
         ticket_types=[
             {
                 'id': tt.id,

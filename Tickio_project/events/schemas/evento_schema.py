@@ -125,6 +125,8 @@ class EventoDetailSchema(BaseModel):
     ticket_types: List[TicketTypeSchema] = []
     total_disponible: int = 0
     precio_minimo: Optional[Decimal] = None
+    latitud: Optional[float] = None
+    longitud: Optional[float] = None
 
     @field_validator('precio', 'precio_minimo', mode='before')
     @classmethod
