@@ -1,3 +1,7 @@
 django
 qrcode
 Pillow
+fastapi
+uvicorn
+pydantic
+python-multipart
