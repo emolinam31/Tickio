@@ -12,7 +12,7 @@ router = APIRouter(prefix="/api/v1/eventos", tags=["Eventos"])
 
 
 @router.get("/", response_model=List[EventoListaSchema])
-async def listar_eventos(
+def listar_eventos(
     estado: str = Query("publicado", description="Estado del evento: publicado, borrador, pausado"),
     ordenar_por: str = Query("-fecha", description="Campo para ordenar: -fecha, nombre, precio")
 ):
@@ -38,7 +38,7 @@ async def listar_eventos(
 
 
 @router.get("/id/{evento_id}", response_model=EventoDetailSchema)
-async def obtener_evento_por_id(evento_id: int):
+def obtener_evento_por_id(evento_id: int):
     """
     Obtener detalles de un evento específico por ID
 
@@ -74,7 +74,7 @@ async def obtener_evento_por_id(evento_id: int):
 
 
 @router.get("/nombre/{nombre}", response_model=List[EventoListaSchema])
-async def buscar_eventos_por_nombre(
+def buscar_eventos_por_nombre(
     nombre: str,
     estado: str = Query("publicado", description="Estado del evento")
 ):
@@ -99,7 +99,7 @@ async def buscar_eventos_por_nombre(
 
 
 @router.get("/categoria/{categoria_id}", response_model=List[EventoListaSchema])
-async def obtener_eventos_por_categoria(
+def obtener_eventos_por_categoria(
     categoria_id: int,
     estado: str = Query("publicado", description="Estado del evento")
 ):
@@ -124,7 +124,7 @@ async def obtener_eventos_por_categoria(
 
 
 @router.get("/organizador/{organizador_id}", response_model=List[EventoListaSchema])
-async def obtener_eventos_por_organizador(
+def obtener_eventos_por_organizador(
     organizador_id: int,
     estado: Optional[str] = Query(None, description="Estado del evento (opcional)")
 ):
@@ -149,7 +149,7 @@ async def obtener_eventos_por_organizador(
 
 
 @router.get("/lugar/{lugar}", response_model=List[EventoListaSchema])
-async def buscar_eventos_por_lugar(
+def buscar_eventos_por_lugar(
     lugar: str,
     estado: str = Query("publicado", description="Estado del evento")
 ):
@@ -174,7 +174,7 @@ async def buscar_eventos_por_lugar(
 
 
 @router.get("/disponibles", response_model=List[EventoListaSchema])
-async def obtener_eventos_disponibles(
+def obtener_eventos_disponibles(
     estado: str = Query("publicado", description="Estado del evento")
 ):
     """
@@ -197,7 +197,7 @@ async def obtener_eventos_disponibles(
 
 
 @router.get("/rango-precio", response_model=List[EventoListaSchema])
-async def obtener_eventos_por_rango_precio(
+def obtener_eventos_por_rango_precio(
     precio_min: Decimal = Query(0, description="Precio mínimo"),
     precio_max: Decimal = Query(9999999, description="Precio máximo"),
     estado: str = Query("publicado", description="Estado del evento")
@@ -228,7 +228,7 @@ async def obtener_eventos_por_rango_precio(
 
 
 @router.get("/rango-fecha", response_model=List[EventoListaSchema])
-async def obtener_eventos_por_rango_fecha(
+def obtener_eventos_por_rango_fecha(
     fecha_inicio: date = Query(..., description="Fecha de inicio (YYYY-MM-DD)"),
     fecha_fin: date = Query(..., description="Fecha de fin (YYYY-MM-DD)"),
     estado: str = Query("publicado", description="Estado del evento")
@@ -259,7 +259,7 @@ async def obtener_eventos_por_rango_fecha(
 
 
 @router.get("/buscar", response_model=List[EventoListaSchema])
-async def buscar_eventos_avanzado(
+def buscar_eventos_avanzado(
     nombre: Optional[str] = Query(None, description="Nombre del evento"),
     categoria_id: Optional[int] = Query(None, description="ID de la categoría"),
     organizador_id: Optional[int] = Query(None, description="ID del organizador"),

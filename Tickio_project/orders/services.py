@@ -19,7 +19,6 @@ from orders.repositories import (
     OrderRepository, TicketRepository, TicketHoldRepository
 )
 from events.models import TicketType
-from events.repositories import TicketTypeRepository
 from payments.interfaces import PaymentGateway
 
 
@@ -41,7 +40,12 @@ class TicketService:
         Raises:
             ValidationError: Si no hay disponibilidad suficiente
         """
-        if not TicketTypeRepository.check_availability(ticket_type_id, quantity):
+        ticket_type = TicketType.objects.filter(id=ticket_type_id).first()
+        if not ticket_type:
+            raise ValidationError("Tipo de boleto no encontrado")
+
+        available = max(ticket_type.capacity - ticket_type.sold, 0)
+        if available < quantity:
             raise ValidationError(
                 f"No hay suficientes boletos disponibles. Solicitó {quantity}."
             )
