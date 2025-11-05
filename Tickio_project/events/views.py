@@ -128,14 +128,9 @@ def crear_evento(request):
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
-<<<<<<< HEAD
-        'action': 'Crear',
-        'titulo': 'Crear Nuevo Evento',
-        'breadcrumbs': breadcrumbs
-=======
         'action': _('Crear'),
-        'titulo': _('Crear Nuevo Evento')
->>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
+        'titulo': _('Crear Nuevo Evento'),
+        'breadcrumbs': breadcrumbs
     })
 
 @login_required
@@ -160,14 +155,9 @@ def editar_evento(request, pk):
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
-<<<<<<< HEAD
-        'action': 'Editar',
-        'titulo': 'Editar Evento',
-        'breadcrumbs': breadcrumbs
-=======
         'action': _('Editar'),
-        'titulo': _('Editar Evento')
->>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
+        'titulo': _('Editar Evento'),
+        'breadcrumbs': breadcrumbs
     })
 
 @login_required

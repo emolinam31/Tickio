@@ -13,13 +13,12 @@ class CustomLoginView(LoginView):
     template_name = 'accounts/login.html'
     redirect_authenticated_user = True
 
-<<<<<<< HEAD
-    def get_context_data(self, **kwargs):
+
+def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['breadcrumbs'] = [{'name': 'Iniciar Sesión'}]
         return context
-=======
->>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
+
 
 def register(request):
     if request.method == 'POST':
