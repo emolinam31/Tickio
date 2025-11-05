@@ -99,6 +99,20 @@
 
     <!-- Main Content -->
     <main class="container py-4">
+        {% if breadcrumbs %}
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb">
+                {% for breadcrumb in breadcrumbs %}
+                    {% if not forloop.last %}
+                        <li class="breadcrumb-item"><a href="{{ breadcrumb.url }}">{{ breadcrumb.name }}</a></li>
+                    {% else %}
+                        <li class="breadcrumb-item active" aria-current="page">{{ breadcrumb.name }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+        {% endif %}
+
         {% block content %}
         {% endblock %}
     </main>

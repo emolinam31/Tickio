@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView, DetailView
 from django.db.models import Sum, F
+from django.urls import reverse
 from .models import Evento, CategoriaEvento
 from .forms import EventoForm, TicketTypeFormSet
 from .decorators import organizador_required
@@ -70,6 +71,7 @@ class EventListView(ListView):
         context = super().get_context_data(**kwargs)
         context['categorias'] = CategoriaEvento.objects.all()
         context['lugares'] = Evento.objects.values_list('lugar', flat=True).distinct()
+        context['breadcrumbs'] = [{'name': 'Eventos'}]
         return context
 
 
@@ -84,11 +86,20 @@ class EventDetailView(DetailView):
             qs = qs.filter(estado='publicado')
         return qs
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['breadcrumbs'] = [
+            {'name': 'Eventos', 'url': reverse('events:events')},
+            {'name': self.object.nombre}
+        ]
+        return context
+
 @login_required
 @organizador_required
 def mis_eventos(request):
     eventos = Evento.objects.filter(organizador=request.user).order_by('-fecha_creacion')
-    return render(request, 'events/mis_eventos.html', {'eventos': eventos})
+    breadcrumbs = [{'name': 'Mis Eventos'}]
+    return render(request, 'events/mis_eventos.html', {'eventos': eventos, 'breadcrumbs': breadcrumbs})
 
 @login_required
 @organizador_required
@@ -108,11 +119,16 @@ def crear_evento(request):
     else:
         form = EventoForm(organizador=request.user)
     formset = TicketTypeFormSet(request.POST or None)
+    breadcrumbs = [
+        {'name': 'Mis Eventos', 'url': reverse('events:mis_eventos')},
+        {'name': 'Crear Evento'}
+    ]
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
         'action': 'Crear',
-        'titulo': 'Crear Nuevo Evento'
+        'titulo': 'Crear Nuevo Evento',
+        'breadcrumbs': breadcrumbs
     })
 
 @login_required
@@ -130,11 +146,16 @@ def editar_evento(request, pk):
     else:
         form = EventoForm(instance=evento)
         formset = TicketTypeFormSet(instance=evento)
+    breadcrumbs = [
+        {'name': 'Mis Eventos', 'url': reverse('events:mis_eventos')},
+        {'name': 'Editar Evento'}
+    ]
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
         'action': 'Editar',
-        'titulo': 'Editar Evento'
+        'titulo': 'Editar Evento',
+        'breadcrumbs': breadcrumbs
     })
 
 @login_required

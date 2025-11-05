@@ -1,6 +1,7 @@
 from decimal import Decimal
 from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from events.models import TicketType
@@ -88,6 +89,7 @@ def cart_view(request: HttpRequest) -> HttpResponse:
     context = {
         'items': items,
         'total': total,
+        'breadcrumbs': [{'name': 'Carrito de Compras'}]
     }
     return render(request, 'orders/cart.html', context)
 
@@ -117,9 +119,13 @@ def checkout_view(request: HttpRequest) -> HttpResponse:
         messages.success(request, "¡Tu compra se ha realizado con éxito! Ya puedes ver tus tickets en 'Mis Órdenes'.")
         return redirect('accounts:my_orders')
 
-    # Para GET request, simplemente mostrar la página de checkout
+    breadcrumbs = [
+        {'name': 'Carrito de Compras', 'url': reverse('orders:cart_view')},
+        {'name': 'Checkout'}
+    ]
     return render(request, 'orders/checkout.html', {
         'cart': cart,
+        'breadcrumbs': breadcrumbs
     })
 
 
@@ -169,6 +175,10 @@ def ticket_detail_view(request, ticket_code):
     context = {
         'ticket': ticket,
         'qr_code': qr_base64,
+        'breadcrumbs': [
+            {'name': 'Mis Órdenes', 'url': reverse('accounts:my_orders')},
+            {'name': f'Ticket {ticket.unique_code[:8]}...'}
+        ]
     }
     return render(request, 'orders/ticket_detail.html', context)
 
