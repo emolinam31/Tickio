@@ -1,5 +1,5 @@
 # Stage 1: Builder
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 WORKDIR /app
 
@@ -20,7 +20,7 @@ WORKDIR /app
 
 # Instalar solo dependencias en tiempo de ejecución
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    postgresql-client \
+    curl \
     && rm -rf /var/lib/apt/lists/*
 
 # Crear usuario no-root para seguridad
@@ -51,8 +51,8 @@ ENV PYTHONUNBUFFERED=1 \
 EXPOSE 8000
 
 # Healthcheck
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()" || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/').read()" || exit 1
 
 # Comando para ejecutar la aplicación
 CMD ["bash", "-c", "cd Tickio_project && gunicorn tickio.wsgi:application --bind 0.0.0.0:8000 --workers 4 --timeout 120 --access-logfile - --error-logfile -"]
