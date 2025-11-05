@@ -1,53 +1,57 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 class CategoriaEvento(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField()
+    nombre = models.CharField(max_length=100, verbose_name=_("Nombre"))
+    descripcion = models.TextField(verbose_name=_("Descripción"))
 
     class Meta:
-        verbose_name = "Categoría de Evento"
-        verbose_name_plural = "Categorías de Eventos"
+        verbose_name = _("Categoría de Evento")
+        verbose_name_plural = _("Categorías de Eventos")
 
     def __str__(self):
         return self.nombre
 
 class Evento(models.Model):
     ESTADO_CHOICES = [
-        ('borrador', 'Borrador'),
-        ('publicado', 'Publicado'),
-        ('pausado', 'Pausado'),
+        ('borrador', _('Borrador')),
+        ('publicado', _('Publicado')),
+        ('pausado', _('Pausado')),
     ]
     
-    nombre = models.CharField(max_length=200)
-    descripcion = models.TextField(blank=True)
+    nombre = models.CharField(max_length=200, verbose_name=_("Nombre"))
+    descripcion = models.TextField(blank=True, verbose_name=_("Descripción"))
     categoria = models.ForeignKey(
         CategoriaEvento, 
         on_delete=models.PROTECT,
-        related_name='eventos'
+        related_name='eventos',
+        verbose_name=_("Categoría")
     )
-    fecha = models.DateField()
-    lugar = models.CharField(max_length=200)
+    fecha = models.DateField(verbose_name=_("Fecha"))
+    lugar = models.CharField(max_length=200, verbose_name=_("Lugar"))
     organizador = models.ForeignKey(
         'accounts.CustomUser',
         on_delete=models.CASCADE,
         related_name='eventos_organizados',
         limit_choices_to={'tipo': 'organizador'},
         null=True,  # Permitir valores nulos temporalmente para el script de población
-        blank=True
+        blank=True,
+        verbose_name=_("Organizador")
     )
-    cupos_disponibles = models.PositiveIntegerField()
-    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    cupos_disponibles = models.PositiveIntegerField(verbose_name=_("Cupos disponibles"))
+    precio = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Precio"))
     estado = models.CharField(
         max_length=20,
         choices=ESTADO_CHOICES,
-        default='borrador'
+        default='borrador',
+        verbose_name=_("Estado")
     )
-    fecha_creacion = models.DateTimeField(auto_now_add=True)
-    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True, verbose_name=_("Fecha de creación"))
+    fecha_actualizacion = models.DateTimeField(auto_now=True, verbose_name=_("Fecha de actualización"))
 
     class Meta:
-        verbose_name = "Evento"
-        verbose_name_plural = "Eventos"
+        verbose_name = _("Evento")
+        verbose_name_plural = _("Eventos")
         ordering = ['-fecha', 'nombre']
 
     def __str__(self):
@@ -96,17 +100,18 @@ class TicketType(models.Model):
     event = models.ForeignKey(
         Evento,
         on_delete=models.CASCADE,
-        related_name='ticket_types'
+        related_name='ticket_types',
+        verbose_name=_("Evento")
     )
-    name = models.CharField(max_length=100)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-    capacity = models.PositiveIntegerField()
-    sold = models.PositiveIntegerField(default=0)
-    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=100, verbose_name=_("Nombre"))
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name=_("Precio"))
+    capacity = models.PositiveIntegerField(verbose_name=_("Capacidad"))
+    sold = models.PositiveIntegerField(default=0, verbose_name=_("Vendidos"))
+    active = models.BooleanField(default=True, verbose_name=_("Activo"))
 
     class Meta:
-        verbose_name = 'Tipo de Boleto'
-        verbose_name_plural = 'Tipos de Boleto'
+        verbose_name = _('Tipo de Boleto')
+        verbose_name_plural = _('Tipos de Boleto')
         constraints = [
             models.CheckConstraint(check=models.Q(sold__gte=0), name='tickettype_sold_gte_0'),
             models.CheckConstraint(check=models.Q(capacity__gte=0), name='tickettype_capacity_gte_0'),

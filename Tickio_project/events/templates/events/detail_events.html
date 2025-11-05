@@ -1,10 +1,21 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block title %}{{ evento.nombre }} - Tickio{% endblock %}
 
 {% block content %}
 <div class="container py-5">
+<<<<<<< HEAD
     
+=======
+    <!-- Breadcrumb navigation -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'events:events' %}">{% trans "Eventos" %}</a></li>
+            <li class="breadcrumb-item active">{{ evento.nombre }}</li>
+        </ol>
+    </nav>
+>>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
 
     <div class="row">
         <!-- Event Details Card -->
@@ -16,30 +27,42 @@
                     <div class="my-4">
                         <p class="card-text">
                             <i class="fas fa-map-marker-alt text-muted me-2"></i>
-                            <strong>Lugar:</strong> {{ evento.lugar }}
+                            <strong>{% trans "Lugar:" %}</strong> {{ evento.lugar }}
                         </p>
                         <p class="card-text">
                             <i class="fas fa-calendar text-muted me-2"></i>
-                            <strong>Fecha:</strong> {{ evento.fecha }}
+                            <strong>{% trans "Fecha:" %}</strong> {{ evento.fecha }}
                         </p>
                         <p class="card-text">
                             <i class="fas fa-user text-muted me-2"></i>
-                            <strong>Organizador:</strong> {{ evento.organizador }}
+                            <strong>{% trans "Organizador:" %}</strong> {{ evento.organizador }}
                         </p>
                         <p class="card-text">
                             <i class="fas fa-users text-muted me-2"></i>
-                            <strong>Cupos disponibles:</strong> 
+                            <strong>{% trans "Cupos disponibles:" %}</strong>
                             {% with disp=evento.total_available %}
                             <span class="badge {% if disp > 0 %}bg-success{% else %}bg-danger{% endif %}">
                                 {% if disp > 0 %}
-                                    {{ disp }} cupos
+                                    {% blocktrans with cantidad=disp %}{{ cantidad }} cupos{% endblocktrans %}
                                 {% else %}
-                                    Agotado
+                                    {% trans "Agotado" %}
                                 {% endif %}
                             </span>
                             {% endwith %}
                         </p>
                     </div>
+                </div>
+            </div>
+
+            <!-- Mapa del Evento -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-map me-2"></i>{% trans "Ubicación del Evento" %}
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div id="mapa-evento" style="width: 100%; height: 400px;"></div>
                 </div>
             </div>
         </div>
@@ -48,7 +71,7 @@
         <div class="col-lg-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h4 class="card-title">Tipos de boleto</h4>
+                    <h4 class="card-title">{% trans "Tipos de boleto" %}</h4>
                     {% if evento.ticket_types.all %}
                         <div class="vstack gap-3">
                             {% for tt in evento.ticket_types.all %}
@@ -56,7 +79,7 @@
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
                                             <div class="fw-semibold">{{ tt.name }}</div>
-                                            <div class="text-muted small">Disponibles: {{ tt.available }}</div>
+                                            <div class="text-muted small">{% blocktrans with disponibles=tt.available %}Disponibles: {{ disponibles }}{% endblocktrans %}</div>
                                         </div>
                                         <div class="text-end">
                                             <div class="fw-bold text-primary">${{ tt.price }}</div>
@@ -68,15 +91,15 @@
                                         <input type="number" class="form-control" name="quantity" value="1" min="1" max="{{ tt.available }}" style="max-width: 110px;" />
                                         <button class="btn btn-sm btn-primary" {% if tt.available == 0 or not tt.active %}disabled{% endif %}>
                                             <i class="fas fa-cart-plus"></i>
-                                            Agregar
+                                            {% trans "Agregar" %}
                                         </button>
                                     </form>
                                 </div>
                             {% endfor %}
                         </div>
-                        <a class="btn btn-outline-secondary w-100 mt-3" href="{% url 'orders:cart_view' %}">Ver carrito</a>
+                        <a class="btn btn-outline-secondary w-100 mt-3" href="{% url 'orders:cart_view' %}">{% trans "Ver carrito" %}</a>
                     {% else %}
-                        <div class="alert alert-info">No hay tipos de boleto configurados.</div>
+                        <div class="alert alert-info">{% trans "No hay tipos de boleto configurados." %}</div>
                     {% endif %}
                 </div>
             </div>
@@ -86,8 +109,100 @@
     <!-- Return to Events List -->
     <div class="mt-4">
         <a href="{% url 'events:events' %}" class="btn btn-outline-primary">
-            <i class="fas fa-arrow-left me-2"></i>Volver a Eventos
+            <i class="fas fa-arrow-left me-2"></i>{% trans "Volver a Eventos" %}
         </a>
     </div>
 </div>
+
+<!-- Leaflet CSS y JS para mapas (alternativa libre a Google Maps) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<script>
+    // Obtener las coordenadas del evento desde el servidor mediante API
+    const eventoId = {{ evento.id }};
+    const lugarEvento = "{{ evento.lugar }}";
+
+    // Función para inicializar el mapa
+    function inicializarMapa() {
+        // Coordenadas por defecto (Medellín, Colombia) si no se obtienen las específicas
+        let latitud = 6.2442;
+        let longitud = -75.5898;
+
+        // Hacer llamada a la API para obtener coordenadas exactas
+        fetch(`/api/v1/eventos/id/${eventoId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Si la API retorna coordenadas, usarlas
+                if (data.latitud && data.longitud) {
+                    latitud = data.latitud;
+                    longitud = data.longitud;
+                }
+
+                // Crear el mapa
+                const mapa = L.map('mapa-evento').setView([latitud, longitud], 15);
+
+                // Agregar capa de tiles (OpenStreetMap)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }).addTo(mapa);
+
+                // Agregar marcador en la ubicación del evento
+                const marcador = L.marker([latitud, longitud], {
+                    title: lugarEvento
+                }).addTo(mapa);
+
+                // Agregar popup con información del evento
+                marcador.bindPopup(`
+                    <div class="map-popup">
+                        <strong>${lugarEvento}</strong>
+                        <br>
+                        <small>Evento: {{ evento.nombre }}</small>
+                    </div>
+                `, {
+                    maxWidth: 250,
+                    className: 'custom-popup'
+                }).openPopup();
+
+                // Hacer zoom a la ubicación
+                mapa.fitBounds(marcador.getBounds(), {padding: [50, 50]});
+            })
+            .catch(error => {
+                console.error('Error obteniendo coordenadas:', error);
+                // En caso de error, mostrar mapa con coordenadas por defecto
+                const mapa = L.map('mapa-evento').setView([latitud, longitud], 15);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }).addTo(mapa);
+
+                const marcador = L.marker([latitud, longitud], {
+                    title: lugarEvento
+                }).addTo(mapa);
+
+                marcador.bindPopup(`
+                    <div class="map-popup">
+                        <strong>${lugarEvento}</strong>
+                        <br>
+                        <small>Evento: {{ evento.nombre }}</small>
+                    </div>
+                `).openPopup();
+            });
+    }
+
+    // Inicializar el mapa cuando la página cargue
+    document.addEventListener('DOMContentLoaded', inicializarMapa);
+</script>
+
+<style>
+    #mapa-evento {
+        border-radius: 0.375rem;
+    }
+
+    .map-popup .leaflet-popup-content {
+        margin: 0;
+        padding: 10px;
+    }
+</style>
 {% endblock %}

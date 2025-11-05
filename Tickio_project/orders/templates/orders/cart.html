@@ -1,20 +1,21 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Carrito - Tickio{% endblock %}
+{% block title %}{% trans "Carrito" %} - Tickio{% endblock %}
 
 {% block content %}
 <div class="container mt-4">
-  <h2>Carrito</h2>
+  <h2>{% trans "Carrito" %}</h2>
   {% if items %}
   <div class="table-responsive">
     <table class="table align-middle">
       <thead>
         <tr>
-          <th>Evento</th>
-          <th>Tipo de boleto</th>
-          <th class="text-end">Precio</th>
-          <th class="text-end">Cantidad</th>
-          <th class="text-end">Subtotal</th>
+          <th>{% trans "Evento" %}</th>
+          <th>{% trans "Tipo de boleto" %}</th>
+          <th class="text-end">{% trans "Precio" %}</th>
+          <th class="text-end">{% trans "Cantidad" %}</th>
+          <th class="text-end">{% trans "Subtotal" %}</th>
           <th></th>
         </tr>
       </thead>
@@ -46,7 +47,7 @@
             <form method="post" action="{% url 'orders:remove_from_cart' %}">
               {% csrf_token %}
               <input type="hidden" name="ticket_type_id" value="{{ item.ticket_type_id }}" />
-              <button class="btn btn-sm btn-outline-danger">Quitar</button>
+              <button class="btn btn-sm btn-outline-danger">{% trans "Quitar" %}</button>
             </form>
           </td>
         </tr>
@@ -54,7 +55,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <th colspan="4" class="text-end">Total</th>
+          <th colspan="4" class="text-end">{% trans "Total" %}</th>
           <th class="text-end">${{ total }}</th>
           <th></th>
         </tr>
@@ -62,10 +63,10 @@
     </table>
   </div>
   <div class="mt-3">
-    <a href="{% url 'orders:checkout' %}" class="btn btn-primary">Proceder al pago</a>
+    <a href="{% url 'orders:checkout' %}" class="btn btn-primary">{% trans "Proceder al pago" %}</a>
   </div>
   {% else %}
-  <div class="alert alert-info">Tu carrito está vacío.</div>
+  <div class="alert alert-info">{% trans "Tu carrito está vacío." %}</div>
   {% endif %}
 </div>
 {% endblock %}

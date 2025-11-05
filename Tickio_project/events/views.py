@@ -8,6 +8,8 @@ from .models import Evento, CategoriaEvento
 from .forms import EventoForm, TicketTypeFormSet
 from .decorators import organizador_required
 from orders.models import Ticket
+from django.utils.translation import gettext as _
+
 
 class HomeView(TemplateView):
     def get_template_names(self):
@@ -111,11 +113,11 @@ def crear_evento(request):
             formset = TicketTypeFormSet(request.POST, instance=evento)
             if formset.is_valid():
                 formset.save()
-                messages.success(request, 'Evento creado exitosamente.')
+                messages.success(request, _('Evento creado exitosamente.'))
                 return redirect('events:mis_eventos')
             else:
                 # Si formset falla, no perder evento: mostrar errores
-                messages.error(request, 'Corrige los errores en los tipos de boleto.')
+                messages.error(request, _('Corrige los errores en los tipos de boleto.'))
     else:
         form = EventoForm(organizador=request.user)
     formset = TicketTypeFormSet(request.POST or None)
@@ -126,9 +128,14 @@ def crear_evento(request):
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
+<<<<<<< HEAD
         'action': 'Crear',
         'titulo': 'Crear Nuevo Evento',
         'breadcrumbs': breadcrumbs
+=======
+        'action': _('Crear'),
+        'titulo': _('Crear Nuevo Evento')
+>>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
     })
 
 @login_required
@@ -141,7 +148,7 @@ def editar_evento(request, pk):
         if form.is_valid() and formset.is_valid():
             form.save()
             formset.save()
-            messages.success(request, 'Evento actualizado exitosamente.')
+            messages.success(request, _('Evento actualizado exitosamente.'))
             return redirect('events:mis_eventos')
     else:
         form = EventoForm(instance=evento)
@@ -153,9 +160,14 @@ def editar_evento(request, pk):
     return render(request, 'events/evento_form.html', {
         'form': form,
         'formset': formset,
+<<<<<<< HEAD
         'action': 'Editar',
         'titulo': 'Editar Evento',
         'breadcrumbs': breadcrumbs
+=======
+        'action': _('Editar'),
+        'titulo': _('Editar Evento')
+>>>>>>> f890d43dd097f5909ddde7464dcc7efaeb18b86a
     })
 
 @login_required
@@ -166,7 +178,7 @@ def cambiar_estado_evento(request, pk):
     if nuevo_estado in ['borrador', 'publicado', 'pausado']:
         evento.estado = nuevo_estado
         evento.save()
-        messages.success(request, f'Estado del evento actualizado a {nuevo_estado}.')
+        messages.success(request, _('Estado del evento actualizado a %(estado)s.') % {'estado': nuevo_estado})
     else:
-        messages.error(request, 'Estado no válido.')
+        messages.error(request, _('Estado no válido.'))
     return redirect('events:mis_eventos')

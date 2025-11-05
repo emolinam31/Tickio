@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Eventos Disponibles - Tickio{% endblock %}
+{% block title %}{% trans "Eventos Disponibles" %} - Tickio{% endblock %}
 
 {% block content %}
 <div class="container py-5">
-    <h1 class="mb-4">Eventos Disponibles</h1>
+    <h1 class="mb-4">{% trans "Eventos Disponibles" %}</h1>
     <div class="card mb-4">
         <div class="card-body">
             <form method="get" class="row g-3">
@@ -16,13 +17,13 @@
                         <input type="text" 
                             name="nombre" 
                             class="form-control" 
-                            placeholder="Buscar eventos por nombre..."
+                            placeholder="{% trans 'Buscar eventos por nombre...' %}"
                             value="{{ request.GET.nombre|default:'' }}">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary w-100">
-                        Buscar
+                        {% trans "Buscar" %}
                     </button>
                 </div>
             </form>
@@ -33,9 +34,9 @@
         <div class="card-body">
             <form method="get" class="row g-3">
                 <div class="col-md-4">
-                    <label class="form-label">Categoría</label>
+                    <label class="form-label">{% trans "Categoría" %}</label>
                     <select name="categoria" class="form-select">
-                        <option value="">Todas las categorías</option>
+                        <option value="">{% trans "Todas las categorías" %}</option>
                         {% for categoria in categorias %}
                         <option value="{{ categoria.nombre }}" 
                                 {% if request.GET.categoria == categoria.nombre %}selected{% endif %}>
@@ -45,9 +46,9 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Lugar</label>
+                    <label class="form-label">{% trans "Lugar" %}</label>
                     <select name="lugar" class="form-select">
-                        <option value="">Todos los lugares</option>
+                        <option value="">{% trans "Todos los lugares" %}</option>
                         {% for lugar in lugares %}
                         <option value="{{ lugar }}"
                                 {% if request.GET.lugar == lugar %}selected{% endif %}>
@@ -57,17 +58,17 @@
                     </select>
                 </div>
                 <div class="col-md-4">
-                    <label class="form-label">Fecha</label>
+                    <label class="form-label">{% trans "Fecha" %}</label>
                     <input type="date" name="fecha" class="form-control" 
                            value="{{ request.GET.fecha|default:'' }}"
                            >
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-filter me-2"></i>Filtrar
+                        <i class="fas fa-filter me-2"></i>{% trans "Filtrar" %}
                     </button>
                     <a href="{% url 'events:events' %}" class="btn btn-secondary">
-                        <i class="fas fa-times me-2"></i>Limpiar Filtros
+                        <i class="fas fa-times me-2"></i>{% trans "Limpiar Filtros" %}
                     </a>
                 </div>
             </form>
@@ -77,11 +78,11 @@
     <div class="alert alert-info mb-4">
         {% if request.GET %}
             {% if request.GET.nombre %}
-                Mostrando resultados para "{{ request.GET.nombre }}" 
+                {% blocktrans with nombre=request.GET.nombre %}Mostrando resultados para "{{ nombre }}"{% endblocktrans %} 
             {% endif %}
-            ({{ page_obj.paginator.count }} eventos encontrados)
+            {% blocktrans with count=page_obj.paginator.count %}({{ count }} eventos encontrados){% endblocktrans %}
         {% else %}
-            Mostrando todos los eventos ({{ page_obj.paginator.count }} en total)
+            {% blocktrans with count=page_obj.paginator.count %}Mostrando todos los eventos ({{ count }} en total){% endblocktrans %}
         {% endif %}
     </div>
 
@@ -109,7 +110,7 @@
                                     <small class="text-muted">{{ tt.name }}: ${{ tt.price }}</small><br>
                                 {% endfor %}
                                 {% if evento.ticket_types.count > 3 %}
-                                    <small class="text-muted">+{{ evento.ticket_types.count|add:"-3" }} más...</small>
+                                    <small class="text-muted">{% blocktrans with extra=evento.ticket_types.count|add:"-3" %}+{{ extra }} más...{% endblocktrans %}</small>
                                 {% endif %}
                             </div>
                         {% else %}
@@ -118,16 +119,16 @@
                         {% with disp=evento.total_available %}
                         <span class="badge {% if disp > 0 %}bg-success{% else %}bg-danger{% endif %}">
                             {% if disp > 0 %}
-                                {{ disp }} cupos
+                                {% blocktrans with cantidad=disp %}{{ cantidad }} cupos{% endblocktrans %}
                             {% else %}
-                                Agotado
+                                {% trans "Agotado" %}
                             {% endif %}
                         </span>
                         {% endwith %}
                     </div>
                     <div class="mt-3 d-flex justify-content-end">
                         <a href="{% url 'events:event_detail' evento.pk %}" class="btn btn-sm btn-primary">
-                            <i class="fas fa-ticket-alt me-1"></i> Comprar
+                            <i class="fas fa-ticket-alt me-1"></i> {% trans "Comprar" %}
                         </a>
                     </div>
                 </div>
@@ -136,19 +137,19 @@
         {% empty %}
         <div class="col-12">
             <div class="alert alert-warning">
-                No se encontraron eventos con los filtros seleccionados.
+                {% trans "No se encontraron eventos con los filtros seleccionados." %}
             </div>
         </div>
         {% endfor %}
     </div>
 
     {% if is_paginated %}
-    <nav aria-label="Page navigation">
+    <nav aria-label="{% trans 'Page navigation' %}">
         <ul class="pagination justify-content-center">
             {% if page_obj.has_previous %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
-                    Anterior
+                    {% trans "Anterior" %}
                 </a>
             </li>
             {% endif %}
@@ -164,7 +165,7 @@
             {% if page_obj.has_next %}
             <li class="page-item">
                 <a class="page-link" href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">
-                    Siguiente
+                    {% trans "Siguiente" %}
                 </a>
             </li>
             {% endif %}

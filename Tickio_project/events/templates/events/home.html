@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Tickio - Eventos{% endblock %}
+{% block title %}Tickio - {% trans "Eventos" %}{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -21,11 +22,11 @@
     <div class="container">
         <div class="row min-vh-75 align-items-center">
             <div class="col-lg-8 mx-auto text-center">
-                <h1 class="display-3 fw-bold mb-4">Tu próxima aventura comienza aquí</h1>
-                <p class="lead mb-5">Encuentra eventos únicos y crea momentos inolvidables</p>
+                <h1 class="display-3 fw-bold mb-4">{% trans "Tu próxima aventura comienza aquí" %}</h1>
+                <p class="lead mb-5">{% trans "Encuentra eventos únicos y crea momentos inolvidables" %}</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
                     <a href="{% url 'events:events' %}" class="btn btn-light btn-lg px-5 py-3 rounded-pill shadow-lg floating-card">
-                        <i class="fas fa-ticket-alt me-2"></i>Descubrir Eventos
+                        <i class="fas fa-ticket-alt me-2"></i>{% trans "Descubrir Eventos" %}
                     </a>
                 </div>
             </div>
@@ -39,19 +40,19 @@
             <div class="display-6 text-primary mb-2">
                 <i class="fas fa-calendar-check"></i>
             </div>
-            <h4>Eventos Diarios</h4>
+            <h4>{% trans "Eventos Diarios" %}</h4>
         </div>
         <div class="col-md-4 mb-4">
             <div class="display-6 text-primary mb-2">
                 <i class="fas fa-users"></i>
             </div>
-            <h4>Comunidad Activa</h4>
+            <h4>{% trans "Comunidad Activa" %}</h4>
         </div>
         <div class="col-md-4 mb-4">
             <div class="display-6 text-primary mb-2">
                 <i class="fas fa-shield-alt"></i>
             </div>
-            <h4>100% Seguro</h4>
+            <h4>{% trans "100% Seguro" %}</h4>
         </div>
     </div>
 </div>

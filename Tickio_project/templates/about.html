@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
-{% block title %}Sobre Nosotros - Tickio{% endblock %}
+{% block title %}{% trans "Sobre Nosotros" %} - Tickio{% endblock %}
 
 {% block content %}
 <div class="container">
     <!-- Hero Section -->
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">Sobre Tickio</h1>
+        <h1 class="display-4 fw-bold">{% trans "Sobre Tickio" %}</h1>
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <p class="lead text-muted">
-                    Conectamos a las personas con los eventos que realmente quieren vivir
+                    {% trans "Conectamos a las personas con los eventos que realmente quieren vivir" %}
                 </p>
             </div>
         </div>
@@ -21,22 +22,22 @@
         <div class="col-md-12">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h2 class="card-title mb-4">¿Por qué Tickio?</h2>
+                    <h2 class="card-title mb-4">{% trans "¿Por qué Tickio?" %}</h2>
                     <p class="card-text">
-                        ¿Alguna vez has querido asistir a un evento y te diste cuenta demasiado tarde, o
-                        tuviste problemas para comprar tu entrada? Eso es justo lo que queremos evitar.
+                        {% blocktrans %}¿Alguna vez has querido asistir a un evento y te diste cuenta demasiado tarde, o
+                        tuviste problemas para comprar tu entrada? Eso es justo lo que queremos evitar.{% endblocktrans %}
                     </p>
                     <p class="card-text">
-                        Nuestra aplicación web está diseñada para que reservar eventos y comprar boletos
+                        {% blocktrans %}Nuestra aplicación web está diseñada para que reservar eventos y comprar boletos
                         sea un proceso fácil, rápido y sin complicaciones. Desde cualquier dispositivo, los
                         usuarios pueden explorar eventos disponibles en su ciudad, filtrar por categoría o
                         fecha, y asegurar su lugar en solo unos pocos pasos. Todo en una plataforma intuitiva
-                        y segura.
+                        y segura.{% endblocktrans %}
                     </p>
                     <p class="card-text">
-                        Además, si eres organizador, podrás publicar tus eventos, gestionar asistentes y ver
+                        {% blocktrans %}Además, si eres organizador, podrás publicar tus eventos, gestionar asistentes y ver
                         estadísticas de ventas en tiempo real, todo desde un panel de administración claro y
-                        sencillo de usar.
+                        sencillo de usar.{% endblocktrans %}
                     </p>
                 </div>
             </div>
@@ -48,13 +49,13 @@
         <div class="col-md-12">
             <div class="card shadow-sm bg-light">
                 <div class="card-body">
-                    <h2 class="card-title mb-4">Nuestro Objetivo</h2>
+                    <h2 class="card-title mb-4">{% trans "Nuestro Objetivo" %}</h2>
                     <p class="card-text">
-                        Desarrollar una aplicación web intuitiva, moderna y eficiente que permita a los
+                        {% blocktrans %}Desarrollar una aplicación web intuitiva, moderna y eficiente que permita a los
                         usuarios explorar, reservar y adquirir boletos para eventos de manera rápida y
                         segura, mejorando significativamente la experiencia de gestión y asistencia a
                         eventos tanto para asistentes como para organizadores. A su vez siendo una red
-                        de eventos e integración de estos para mayor facilidad e interés de los usuarios.
+                        de eventos e integración de estos para mayor facilidad e interés de los usuarios.{% endblocktrans %}
                     </p>
                 </div>
             </div>
@@ -62,7 +63,7 @@
     </div>
 
     <!-- Team Section -->
-    <h2 class="text-center mb-4">Nuestro Equipo</h2>
+    <h2 class="text-center mb-4">{% trans "Nuestro Equipo" %}</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
         <!-- Esteban Molina -->
         <div class="col">
@@ -70,7 +71,7 @@
                 <div class="card-body">
                     <i class="fas fa-user-circle fa-4x mb-3 text-primary"></i>
                     <h5 class="card-title">Esteban Molina</h5>
-                    <p class="card-text text-muted">Desarrollador Full-Stack</p>
+                    <p class="card-text text-muted">{% trans "Desarrollador Full-Stack" %}</p>
                 </div>
             </div>
         </div>
@@ -80,7 +81,7 @@
                 <div class="card-body">
                     <i class="fas fa-user-circle fa-4x mb-3 text-primary"></i>
                     <h5 class="card-title">Felipe Castro</h5>
-                    <p class="card-text text-muted">Desarrollador Full-Stack</p>
+                    <p class="card-text text-muted">{% trans "Desarrollador Full-Stack" %}</p>
                 </div>
             </div>
         </div>
@@ -90,7 +91,7 @@
                 <div class="card-body">
                     <i class="fas fa-user-circle fa-4x mb-3 text-primary"></i>
                     <h5 class="card-title">Santiago Ramirez</h5>
-                    <p class="card-text text-muted">Desarrollador Full-Stack</p>
+                    <p class="card-text text-muted">{% trans "Desarrollador Full-Stack" %}</p>
                 </div>
             </div>
         </div>

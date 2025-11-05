@@ -1,0 +1,318 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-11 18:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Tickio"
+msgstr "Tickio"
+
+msgid "Inicio"
+msgstr "Home"
+
+msgid "Eventos"
+msgstr "Events"
+
+msgid "Acerca de"
+msgstr "About"
+
+msgid "Carrito"
+msgstr "Cart"
+
+msgid "Mi Cuenta"
+msgstr "My Account"
+
+msgid "Mi Perfil"
+msgstr "My Profile"
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "Mis Eventos"
+msgstr "My Events"
+
+msgid "Mis Órdenes"
+msgstr "My Orders"
+
+msgid "Cerrar Sesión"
+msgstr "Log Out"
+
+msgid "Iniciar Sesión"
+msgstr "Log In"
+
+msgid "Registrarse"
+msgstr "Sign Up"
+
+msgid "Tu plataforma de confianza para descubrir y reservar los mejores eventos."
+msgstr "Your trusted platform to discover and book the best events."
+
+msgid "Enlaces Rápidos"
+msgstr "Quick Links"
+
+msgid "Explorar Eventos"
+msgstr "Explore Events"
+
+msgid "Sobre Nosotros"
+msgstr "About Us"
+
+msgid "Síguenos"
+msgstr "Follow Us"
+
+msgid "Todos los derechos reservados."
+msgstr "All rights reserved."
+
+msgid "Eventos Disponibles"
+msgstr "Available Events"
+
+msgid "Buscar eventos por nombre..."
+msgstr "Search events by name..."
+
+msgid "Buscar"
+msgstr "Search"
+
+msgid "Categoría"
+msgstr "Category"
+
+msgid "Todas las categorías"
+msgstr "All categories"
+
+msgid "Lugar"
+msgstr "Location"
+
+msgid "Todos los lugares"
+msgstr "All locations"
+
+msgid "Fecha"
+msgstr "Date"
+
+msgid "Filtrar"
+msgstr "Filter"
+
+msgid "Limpiar Filtros"
+msgstr "Clear Filters"
+
+msgid "Mostrando resultados para \"%(nombre)s\" (%(count)s eventos encontrados)"
+msgstr "Showing results for \"%(nombre)s\" (%(count)s events found)"
+
+msgid "(%(count)s eventos encontrados)"
+msgstr "(%(count)s events found)"
+
+msgid "Mostrando todos los eventos (%(count)s en total)"
+msgstr "Showing all events (%(count)s total)"
+
+msgid "%(cantidad)s cupos"
+msgstr "%(cantidad)s spots"
+
+msgid "Agotado"
+msgstr "Sold Out"
+
+msgid "Comprar"
+msgstr "Buy"
+
+msgid "No se encontraron eventos con los filtros seleccionados."
+msgstr "No events found with the selected filters."
+
+msgid "Anterior"
+msgstr "Previous"
+
+msgid "Siguiente"
+msgstr "Next"
+
+msgid "Lugar:"
+msgstr "Location:"
+
+msgid "Fecha:"
+msgstr "Date:"
+
+msgid "Organizador:"
+msgstr "Organizer:"
+
+msgid "Cupos disponibles:"
+msgstr "Available spots:"
+
+msgid "Tipos de boleto"
+msgstr "Ticket types"
+
+msgid "Disponibles: %(disponibles)s"
+msgstr "Available: %(disponibles)s"
+
+msgid "Agregar"
+msgstr "Add"
+
+msgid "Ver carrito"
+msgstr "View cart"
+
+msgid "No hay tipos de boleto configurados."
+msgstr "No ticket types configured."
+
+msgid "Volver a Eventos"
+msgstr "Back to Events"
+
+msgid "Registro de Usuario"
+msgstr "User Registration"
+
+msgid "¿Ya tienes una cuenta?"
+msgstr "Already have an account?"
+
+msgid "Inicia sesión aquí"
+msgstr "Log in here"
+
+msgid "¿No tienes una cuenta?"
+msgstr "Don't have an account?"
+
+msgid "Regístrate aquí"
+msgstr "Sign up here"
+
+msgid "Actualizar Perfil"
+msgstr "Update Profile"
+
+msgid "%(action)s Evento"
+msgstr "%(action)s Event"
+
+msgid "Tipos de Boleto"
+msgstr "Ticket Types"
+
+msgid "Eliminar"
+msgstr "Delete"
+
+msgid "Cancelar"
+msgstr "Cancel"
+
+msgid "Crear Nuevo Evento"
+msgstr "Create New Event"
+
+msgid "%(cupos)s cupos disponibles"
+msgstr "%(cupos)s spots available"
+
+msgid "Editar"
+msgstr "Edit"
+
+msgid "Estado"
+msgstr "Status"
+
+msgid "Pasar a borrador"
+msgstr "Move to draft"
+
+msgid "Publicar"
+msgstr "Publish"
+
+msgid "Pausar"
+msgstr "Pause"
+
+msgid "No tienes eventos creados. ¡Comienza creando uno nuevo!"
+msgstr "You have no events created. Start by creating a new one!"
+
+msgid "Sobre Tickio"
+msgstr "About Tickio"
+
+msgid "Conectamos a las personas con los eventos que realmente quieren vivir"
+msgstr "We connect people with the events they really want to experience"
+
+msgid "¿Por qué Tickio?"
+msgstr "Why Tickio?"
+
+msgid "¿Alguna vez has querido asistir a un evento y te diste cuenta demasiado tarde, o tuviste problemas para comprar tu entrada? Eso es justo lo que queremos evitar."
+msgstr "Have you ever wanted to attend an event and realized too late, or had trouble buying your ticket? That's exactly what we want to avoid."
+
+msgid "Nuestra aplicación web está diseñada para que reservar eventos y comprar boletos sea un proceso fácil, rápido y sin complicaciones. Desde cualquier dispositivo, los usuarios pueden explorar eventos disponibles en su ciudad, filtrar por categoría o fecha, y asegurar su lugar en solo unos pocos pasos. Todo en una plataforma intuitiva y segura."
+msgstr "Our web application is designed to make booking events and buying tickets an easy, fast, and hassle-free process. From any device, users can explore available events in their city, filter by category or date, and secure their spot in just a few steps. All on an intuitive and secure platform."
+
+msgid "Además, si eres organizador, podrás publicar tus eventos, gestionar asistentes y ver estadísticas de ventas en tiempo real, todo desde un panel de administración claro y sencillo de usar."
+msgstr "Additionally, if you're an organizer, you can publish your events, manage attendees, and view real-time sales statistics, all from a clear and easy-to-use administration panel."
+
+msgid "Nuestro Objetivo"
+msgstr "Our Goal"
+
+msgid "Desarrollar una aplicación web intuitiva, moderna y eficiente que permita a los usuarios explorar, reservar y adquirir boletos para eventos de manera rápida y segura, mejorando significativamente la experiencia de gestión y asistencia a eventos tanto para asistentes como para organizadores. A su vez siendo una red de eventos e integración de estos para mayor facilidad e interés de los usuarios."
+msgstr "Develop an intuitive, modern, and efficient web application that allows users to explore, book, and purchase event tickets quickly and securely, significantly improving the event management and attendance experience for both attendees and organizers. Also serving as an event network and integration platform for greater ease and user interest."
+
+msgid "Nuestro Equipo"
+msgstr "Our Team"
+
+msgid "Desarrollador Full-Stack"
+msgstr "Full-Stack Developer"
+
+msgid "Tu próxima aventura comienza aquí"
+msgstr "Your next adventure starts here"
+
+msgid "Encuentra eventos únicos y crea momentos inolvidables"
+msgstr "Find unique events and create unforgettable moments"
+
+msgid "Descubrir Eventos"
+msgstr "Discover Events"
+
+msgid "Eventos Diarios"
+msgstr "Daily Events"
+
+msgid "Comunidad Activa"
+msgstr "Active Community"
+
+msgid "100% Seguro"
+msgstr "100% Secure"
+
+msgid "Evento"
+msgstr "Event"
+
+msgid "Tipo de boleto"
+msgstr "Ticket type"
+
+msgid "Precio"
+msgstr "Price"
+
+msgid "Cantidad"
+msgstr "Quantity"
+
+msgid "Subtotal"
+msgstr "Subtotal"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Quitar"
+msgstr "Remove"
+
+msgid "Proceder al pago"
+msgstr "Proceed to checkout"
+
+msgid "Tu carrito está vacío."
+msgstr "Your cart is empty."
+
+msgid "Checkout"
+msgstr "Checkout"
+
+msgid "Pago simulado aprobado. ¡Gracias por tu compra!"
+msgstr "Simulated payment approved. Thank you for your purchase!"
+
+msgid "Pedido: %(pedido)s | Total: $%(total)s"
+msgstr "Order: %(pedido)s | Total: $%(total)s"
+
+msgid "Seguir explorando eventos"
+msgstr "Continue exploring events"
+
+msgid "Pagar ahora (simulado)"
+msgstr "Pay now (simulated)"
+
+msgid "Volver al carrito"
+msgstr "Back to cart"
+
+msgid "No tienes productos en el carrito."
+msgstr "You have no items in your cart."
+
+msgid "Explorar eventos"
+msgstr "Explore events"
+
+msgid "Sobre Nosotros"
+msgstr "About Us"
