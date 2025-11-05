@@ -1,0 +1,73 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: tickio_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-tickio_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-tickio_password}
+      POSTGRES_DB: ${DB_NAME:-tickio_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-tickio_user}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tickio_network
+
+  web:
+    build: .
+    container_name: tickio_app
+    command: bash -c "cd Tickio_project && python manage.py migrate && gunicorn tickio.wsgi:application --bind 0.0.0.0:8000 --workers 4 --timeout 120"
+    environment:
+      DEBUG: ${DEBUG:-False}
+      DB_ENGINE: django.db.backends.postgresql
+      DB_NAME: ${DB_NAME:-tickio_db}
+      DB_USER: ${DB_USER:-tickio_user}
+      DB_PASSWORD: ${DB_PASSWORD:-tickio_password}
+      DB_HOST: db
+      DB_PORT: 5432
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./static:/app/static
+      - ./media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - tickio_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/admin/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  nginx:
+    image: nginx:alpine
+    container_name: tickio_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./static:/app/static:ro
+      - ./media:/app/media:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - web
+    networks:
+      - tickio_network
+
+volumes:
+  postgres_data:
+
+networks:
+  tickio_network:
+    driver: bridge
